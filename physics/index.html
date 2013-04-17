@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>Motor f&iacute;sico</title>
+<script type="text/javascript" src="motor_fisico.js"></script>
+</head>
+<body style="background-color:#1f2020;color:white">
+<center><h1>Motor f&iacute;sico</h1></center>
+<center>
+<div id="zone" style="background-color:gray; position: relative; border:2px solid black; overflow: hidden;">
+</div>
+</center>
+<script type="text/javascript">
+/*definición de los coeficientes de los materiales (acero, aluminio, latón)
+Coef. restitución:
+	acero-acero		--> coeficientes[0][0][0]
+	acero-aluminio		--> coeficientes[0][0][1]
+	acero-latón		--> coeficientes[0][0][2]
+	acero-borde zona	--> coeficientes[0][0][3]
+
+	aluminio-acero		--> coeficientes[0][1][0]
+	aluminio-aluminio	--> coeficientes[0][1][1]
+	aluminio-latón		--> coeficientes[0][1][2]
+	aluminio-borde zona	--> coeficientes[0][1][3]
+
+	latón-acero		--> coeficientes[0][2][0]
+	latón-aluminio		--> coeficientes[0][2][1]
+	latón-latón		--> coeficientes[0][2][2]
+	latón-borde zona	--> coeficientes[0][2][3]
+
+Coef. fricción:
+	acero-acero		--> coeficientes[1][0][0]
+	acero-aluminio		--> coeficientes[1][0][1]
+	acero-latón		--> coeficientes[1][0][2]
+	acero-borde zona	--> coeficientes[1][0][3]
+
+	aluminio-acero		--> coeficientes[1][1][0]
+	aluminio-aluminio	--> coeficientes[1][1][1]
+	aluminio-latón		--> coeficientes[1][1][2]
+	aluminio-borde zona	--> coeficientes[1][1][3]
+
+	latón-acero		--> coeficientes[1][2][0]
+	latón-aluminio		--> coeficientes[1][2][1]
+	latón-latón		--> coeficientes[1][2][2]
+	latón-borde zona	--> coeficientes[1][2][3]
+*/
+var coeficientes = 	new Array(
+			new Array(
+			new Array(0.94,0.62,0.65,0.70),
+			new Array(0.62,0.61,0.55,0.65),
+			new Array(0.65,0.55,0.57,0.60)),
+			new Array(
+			new Array(0.10,0.09,0.10,0.97),
+			new Array(0.09,0.12,0.10,0.15),
+			new Array(0.10,0.10,0.11,0.10)));
+//longitud de los lados de los cuadrados (en píxeles)
+var tamano = 40;
+//aceleraciones que afectan a todos los objetos del sistema (por ejemplo: la gravedad o el viento)
+//	horizontal
+var aceleracion_amb_x = 0;
+//	vertical
+var aceleracion_amb_y = 9.8;
+//cada cuantos milisegundos se actualizan las posiciones de los objetos
+var frame = 17;
+//Cuantos pixeles equivalen 1 metro
+var escala = 10;
+//Definición del elemento que contendrá el motor físico, llamado zona
+var zona = document.getElementById("zone");
+//	ancho de zona
+zona.width=604;
+//	alto de zona
+zona.height=405;
+//	posición relativa de zona
+zona.top=0;
+zona.left=0;
+//
+zona.style.width=zona.width;
+zona.style.height=zona.height;
+zona.style.top=zona.top;
+zona.style.left=zona.left;
+//Definicion de los objetos
+//               SolidoDinamico (x_inicial,y_inicial,aceleracion_x,aceleracion_y,velocidad_inicial_x,velocidad_inicial_y,masa,material)
+objetos[0] = new SolidoDinamico (20.0,20.7,0.0,0,7.0,0.0,10.0,0);
+objetos[1] = new SolidoDinamico (20.0,0.9,0.0,0.0,0.0,0.0,30.0,1);
+objetos[2] = new SolidoDinamico (0.0,20.0,0.0,0.0,6.0,12.0,5.0,2);
+objetos[3] = new SolidoDinamico (1.0,20.0,0.0,0.0,50.0,-75.0,10.0,0);
+objetos[4] = new SolidoDinamico (0.7,0.0,0.0,0.0,35.4,23.4,30.0,1);
+objetos[5] = new SolidoDinamico (20.0,10.0,0.0,0.0,50.0,10.0,5.0,2);
+
+//instrucción que ejecuta la función upDate() cada frame milisegundos
+self.setInterval("upDate ()",frame);
+</script>
+</br></br></br>
+<center>
+<img width="40px" height="40px" src="img/acero.jpg"> Acero </br>
+<img width="40px" height="40px" src="img/aluminio.jpg"> Aluminio </br>
+<img width="40px" height="40px" src="img/laton.jpg"> Lat&oacute;n </br>
+</center>
+</body>
+</html>
